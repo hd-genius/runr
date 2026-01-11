@@ -14,14 +14,9 @@ def main():
         if (is_program_command(first_argument)):
             run_command(first_argument)
         else:
-            run_script(first_argument)
+            find_script_with_name(first_argument).execute()
     except ApplicationError as error:
         error.print()
-
-
-def run_script(script_name):
-    script_to_run = find_script_with_name(script_name)
-    script_to_run.execute()
 
 
 if __name__ == "__main__":
