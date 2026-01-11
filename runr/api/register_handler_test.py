@@ -1,5 +1,6 @@
 from unittest import TestCase
-from api import register_handler, script_handlers, ScriptHandler
+from .register_handler import register_handler, script_handlers
+from .script_handler import ScriptHandler
 
 
 class TestRegisterHandler(TestCase):
