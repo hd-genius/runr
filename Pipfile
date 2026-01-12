@@ -10,7 +10,7 @@ pep8 = "*"
 autopep8 = "*"
 
 [scripts]
-test = "python -m unittest discover -s src -p *_test.py"
+test = "python -m unittest discover -s runr -p *_test.py"
 format = "autopep8 . -r --in-place"
 check-format = "pep8 ."
 lint = "echo 'lint passed'"

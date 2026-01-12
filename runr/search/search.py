@@ -7,7 +7,7 @@ from runr.api import script_handlers, Script
 
 ScriptLocator = namedtuple('ScriptLocator', 'name path')
 
-SCRIPTS_HOME_VARIABLE = "SCRIPT_RUNNER_DIR"
+SCRIPTS_ENV_VAR = "RUNR_SCRIPTS"
 
 
 def find_script_with_name(name: str) -> Script:
@@ -17,10 +17,9 @@ def find_script_with_name(name: str) -> Script:
 
 
 def find_all_scripts() -> list[Script]:
-    if SCRIPTS_HOME_VARIABLE not in os.environ:
-        raise ConfigurationError(
-            'The environment variable "SCRIPT_RUNNER_DIR" is not set.')
-    scripts_location = os.environ[SCRIPTS_HOME_VARIABLE]
+    if SCRIPTS_ENV_VAR not in os.environ:
+        raise ConfigurationError(f'The environment variable "{SCRIPTS_ENV_VAR}" is not set.')
+    scripts_location = os.environ[SCRIPTS_ENV_VAR]
     script_paths = [x for x in _all_files_under_folder(
         scripts_location) if _is_script(x)]
     return [script for path in script_paths for script in _all_scripts_for_file(path)]

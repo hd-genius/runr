@@ -1,9 +1,12 @@
 import os
 from pathlib import Path
 from importlib import import_module
+import logging
 
-plugin_module_directory = Path(__file__).parent.resolve()
+from runr.utils import get_program_home
 
+
+logger = logging.getLogger(__name__)
 
 def load_plugins():
     for plugin in _find_all_plugins():
@@ -12,18 +15,19 @@ def load_plugins():
 
 def _load_plugin(plugin: Path):
     import_module("plugins." + plugin.stem)
+    logger.info(f'The plugin {plugin} was loaded.')
 
 
 def _find_all_plugins():
-    file_names = os.listdir(plugin_module_directory)
-    files = [_path_for_plugin(x) for x in file_names]
+    plugin_dir = _get_plugins_directory()
+    logger.info(f'The directory {plugin_dir} is assumed to be the plugin install location.')
+    files = [Path(os.path.join(plugin_dir, x)) for x in os.listdir(plugin_dir)]
     return [x for x in files if _is_plugin(x)]
 
 
 def _is_plugin(file: Path):
-    plugin_source_files = ["__init__.py", "load.py"]
-    return file.suffix == ".py" and file.name not in plugin_source_files
+    return file.suffix == ".py"
 
 
-def _path_for_plugin(name):
-    return Path(os.path.join(plugin_module_directory, name))
+def _get_plugins_directory():
+    return get_program_home().joinpath('plugins')
