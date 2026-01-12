@@ -1,18 +1,20 @@
 from unittest import TestCase
-from .register_handler import register_handler, script_handlers
-from .script_handler import ScriptHandler
+from .register_script import register_script, script_classes
+from .script import Script
 
 
 class TestRegisterHandler(TestCase):
     def setUp(self):
-        script_handlers = []
+        script_classes = []
 
     def test_a_handler_instance_is_added(self):
-        @register_handler
-        class TestHandler(ScriptHandler):
+        @register_script
+        class TestScript(Script):
+            @classmethod
             def can_handle(file):
                 return False
 
             def create_script_for(file):
                 return None
-        self.assertIsInstance(script_handlers[0], TestHandler)
+        
+        self.assertIsInstance(script_classes[0], TestScript)

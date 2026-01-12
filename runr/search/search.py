@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from collections import namedtuple
 from runr.errors import InvalidScriptNameError, ConflictingScriptNamesError, ConfigurationError
-from runr.api import script_handlers, Script
+from runr.api import script_classes, Script
 
 
 ScriptLocator = namedtuple('ScriptLocator', 'name path')
@@ -20,8 +20,7 @@ def find_all_scripts() -> list[Script]:
     if SCRIPTS_ENV_VAR not in os.environ:
         raise ConfigurationError(f'The environment variable "{SCRIPTS_ENV_VAR}" is not set.')
     scripts_location = os.environ[SCRIPTS_ENV_VAR]
-    script_paths = [x for x in _all_files_under_folder(
-        scripts_location) if _is_script(x)]
+    script_paths = [x for x in _all_files_under_folder(scripts_location) if _is_script(x)]
     return [script for path in script_paths for script in _all_scripts_for_file(path)]
 
 
@@ -34,14 +33,15 @@ def _verify_matching_scripts(script_name, scripts):
 
 
 def _all_files_under_folder(folderPath: str):
+    # TODO: add config to search recursively into dirs
     return [Path(os.path.join(root, fileName)) for root, directories, files in os.walk(folderPath) for fileName in files]
 
 
 def _all_scripts_for_file(file: Path) -> list[Script]:
-    capable_handlers = [x for x in script_handlers if x.can_handle(file)]
-    return [x.create_script_for(file) for x in capable_handlers]
+    capable_handlers = [x for x in script_classes if x.can_handle(file)]
+    return [x(file) for x in capable_handlers]
 
 
 def _is_script(path: Path):
-    script_compatabilities = [x.can_handle(path) for x in script_handlers]
-    return any(script_compatabilities)
+    script_compatibilities = [x.can_handle(path) for x in script_classes]
+    return any(script_compatibilities)
