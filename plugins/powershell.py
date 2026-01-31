@@ -13,4 +13,4 @@ class PowerShellScript(Script):
         super().__init__(file)
 
     def execute(self):
-        subprocess.run(f"PowerShell -File {self.path}")
+        subprocess.run(['powershell', self.path])
