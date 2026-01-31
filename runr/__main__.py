@@ -18,7 +18,7 @@ def main():
         else:
             script_arguments = sys.argv[2:]
             find_script_with_name(first_argument).execute()
-    except ApplicationError as error:
+    except Exception as error:
         error.print()
 
 
