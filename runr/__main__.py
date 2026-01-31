@@ -6,10 +6,10 @@ import logging
 from runr.plugins import load_plugins
 from runr.commands import is_program_command, run_command
 from runr.search import find_script_with_name
-from runr.errors import ApplicationError
+from runr.utils import get_program_home
 
 def main():
-    logging.basicConfig(filename='runr.log', level=logging.INFO)
+    logging.basicConfig(filename=get_program_home().joinpath('runr.log'), level=logging.INFO)
     try:
         load_plugins()
         try:
