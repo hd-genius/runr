@@ -7,6 +7,12 @@ class Script(ABC):
     name: str
     path: Path
 
+    @classmethod
+    @abstractmethod
+    def can_handle(self, file: Path) -> bool:
+        """Returns True if this script type can handle the given file, returns False if it cannot."""
+        pass
+
     def __init__(self, file: Path) -> None:
         self.name = file.stem
         self.path = file
