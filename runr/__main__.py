@@ -12,7 +12,11 @@ def main():
     logging.basicConfig(filename='runr.log', level=logging.INFO)
     try:
         load_plugins()
-        first_argument = sys.argv[1]
+        try:
+            first_argument = sys.argv[1]
+        except IndexError:
+            print('No argument was provided to runr. Please provide a script name or another argument.'
+                  'Use "runr --help for help."')
         if (is_program_command(first_argument)):
             run_command(first_argument)
         else:
