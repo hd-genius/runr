@@ -8,12 +8,15 @@ pyfakefs = "*"
 parameterized = "*"
 pep8 = "*"
 autopep8 = "*"
+pyinstaller = "*"
 
 [scripts]
 test = "python -m unittest discover -s runr -p *_test.py"
 format = "autopep8 . -r --in-place"
 check-format = "pep8 ."
 lint = "echo 'lint passed'"
+build = "pyinstaller runr/__main__.py --noconfirm --name runr"
+clean = "rm -r build dist"
 
 [requires]
-python_version = "3.11"
+python_version = "3.13"
