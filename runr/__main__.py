@@ -17,6 +17,7 @@ def main():
         except IndexError:
             print('No argument was provided to runr. Please provide a script name or another argument.'
                   'Use "runr --help for help."')
+            sys.exit()
         if (is_program_command(first_argument)):
             run_command(first_argument)
         else:
