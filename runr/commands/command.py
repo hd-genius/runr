@@ -1,9 +1,10 @@
 commands = {}
 
 
-def register_command(name: str):
+def register_command(*aliases: list[str]):
     def add_command(command: callable):
-        commands[name] = command
+        for alias in aliases:
+            commands[alias] = command
         return command
     return add_command
 

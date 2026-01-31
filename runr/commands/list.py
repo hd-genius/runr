@@ -2,7 +2,7 @@ from .command import register_command
 from runr.search import find_all_scripts
 
 
-@register_command("--list")
+@register_command('--list', '-l')
 def list_scripts():
     print("available scripts:")
     for script in find_all_scripts():
