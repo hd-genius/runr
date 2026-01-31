@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import sys
 from importlib import import_module
 import logging
 
@@ -9,6 +10,7 @@ from runr.utils import get_program_home
 logger = logging.getLogger(__name__)
 
 def load_plugins():
+    sys.path.append(str(get_program_home()))
     for plugin in _find_all_plugins():
         _load_plugin(plugin)
 
