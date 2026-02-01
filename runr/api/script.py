@@ -11,7 +11,7 @@ class Script(ABC):
     @abstractmethod
     def can_handle(self, file: Path) -> bool:
         """Returns True if this script type can handle the given file, returns False if it cannot."""
-        pass
+        raise NotImplementedError()
 
     def __init__(self, file: Path) -> None:
         self.name = file.stem
@@ -20,4 +20,4 @@ class Script(ABC):
     @abstractmethod
     def execute(self):
         """Runs the script file that this object represents"""
-        pass
+        raise NotImplementedError
